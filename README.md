@@ -16,6 +16,8 @@ Here is an example of creating a packed-strings:
 ```golang
 import "github.com/reiver/go-pckstr"
 
+// ...
+
 packed := pckstr.SomeStrings("Once", "Twice", "Thrice", "Fource")
 ```
 
@@ -24,8 +26,26 @@ Here is an example of unpacking a packed-strings:
 ```golang
 import "github.com/reiver/go-pckstr"
 
+// ...
+
 strings := packed.Strings()
 // strings == []string{"Once", "Twice", "Thrice", "Fource"}
+```
+
+Here is an example of using `==` to compare a packed-strings:
+
+```golang
+import "github.com/reiver/go-pckstr"
+
+// ...
+
+packed := pckstr.SomeStrings("apple", "BANANA", "Cherry", "dAtE")
+
+// ...
+
+if pckstr.NoString() == packed {
+	// ...
+}
 ```
 
 ## Import
