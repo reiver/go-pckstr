@@ -81,6 +81,21 @@ func (receiver PackedStrings) IsNothing() bool {
 	return receiver.optional.IsNothing()
 }
 
+func (receiver PackedStrings) LenZero() bool {
+	packed, something := receiver.optional.Get()
+
+	switch {
+	case !something:
+		return true
+	case "" == packed:
+		return true
+	case "\x1F" == packed:
+		return true
+	default:
+		return false
+	}
+}
+
 func (receiver PackedStrings) Strings() []string {
 	packed, something := receiver.optional.Get()
 
