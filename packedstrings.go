@@ -13,12 +13,16 @@ type PackedStrings struct {
 // Nothing return a 'nothing' optional-type value.
 //
 // [PackedStrings] is an optional-type.
+//
+// Nothing should not be confused with [NoStrings].
 func Nothing() PackedStrings {
 	return PackedStrings{}
 }
 
 func NoStrings() PackedStrings {
-	return Nothing()
+	return PackedStrings{
+		optional: opt.Something(pck.Pack()),
+	}
 }
 
 func SomeString(str string) PackedStrings {
