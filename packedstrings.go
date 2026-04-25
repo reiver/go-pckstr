@@ -1,12 +1,17 @@
 package pckstr
 
 import (
+	gobytes "bytes"
 	"encoding/json"
 	"strconv"
 
 	"github.com/reiver/go-opt"
 
 	"github.com/reiver/go-pckstr/pck"
+)
+
+var (
+	null []byte = []byte{'n','u','l','l'}
 )
 
 type PackedStrings struct {
@@ -109,4 +114,24 @@ func (receiver PackedStrings) Strings() []string {
 	}
 
 	return pck.Unpack(packed)
+}
+
+func (receiver *PackedStrings) UnmarshalJSON(bytes []byte) error {
+	if nil == receiver {
+		return ErrNilReceiver
+	}
+
+	if gobytes.Equal(null, bytes) {
+		*receiver = Nothing()
+		return nil
+	}
+
+	var strs []string
+	err := json.Unmarshal(bytes, &strs)
+	if nil != err {
+		return err
+	}
+
+	*receiver = SomeStrings(strs...)
+	return nil
 }
