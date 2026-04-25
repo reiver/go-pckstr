@@ -1,6 +1,7 @@
 package pckstr
 
 import (
+	"encoding/json"
 	"strconv"
 
 	"github.com/reiver/go-opt"
@@ -94,6 +95,10 @@ func (receiver PackedStrings) LenZero() bool {
 	default:
 		return false
 	}
+}
+
+func (receiver PackedStrings) MarshalJSON() ([]byte, error) {
+	return json.Marshal(receiver.Strings())
 }
 
 func (receiver PackedStrings) Strings() []string {
